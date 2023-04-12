@@ -19,5 +19,19 @@ public class EmpWage {
         } else {
             System.out.println("Employee is Absent. Daily Wage = " + dailyWage);
         }
+
+        int IS_PART_TIME = 1;
+        int IS_FULL_TIME = 2;
+        int PART_TIME_HOUR = 4;
+        int NewAttendance = (int) (Math.random() * 3);
+        if (NewAttendance == IS_PART_TIME) {
+            dailyWage = WAGE_PER_HOUR * PART_TIME_HOUR;
+            System.out.println("Employee is Part Time. Daily Wage = " + dailyWage);
+        } else if (NewAttendance == IS_FULL_TIME) {
+            dailyWage = WAGE_PER_HOUR * FULL_DAY_HOUR;
+            System.out.println("Employee is Full Time. Daily Wage = " + dailyWage);
+        } else {
+            System.out.println("Employee is Absent. Daily Wage = " + dailyWage);
+        }
     }
 }
