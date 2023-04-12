@@ -45,23 +45,16 @@ public class EmpWage {
 
         // UC-4
 
-        final int PART_TIME = 1;
-        final int FULL_TIME = 2;
-        final int WAGEPERHOUR = 20;
-        final int FULLDAYHOUR = 8;
-        final int PARTTIMEHOUR = 4;
         switch (NewAttendance) {
-            case PART_TIME:
-                dailyWage = WAGEPERHOUR * PARTTIMEHOUR;
+            case 1 -> {
+                dailyWage = WAGE_PER_HOUR * PART_TIME_HOUR;
                 System.out.println("Employee is Part Time. Daily Wage = " + dailyWage);
-                break;
-            case FULL_TIME:
-                dailyWage = WAGEPERHOUR * FULLDAYHOUR;
+            }
+            case 2 -> {
+                dailyWage = WAGE_PER_HOUR * FULL_DAY_HOUR;
                 System.out.println("Employee is Full Time. Daily Wage = " + dailyWage);
-                break;
-            default:
-                System.out.println("Employee is Absent. Daily Wage = " + dailyWage);
-                break;
+            }
+            default -> System.out.println("Employee is Absent. Daily Wage = " + dailyWage);
         }
 
 //         UC-5
@@ -70,15 +63,39 @@ public class EmpWage {
 
         for (int i = 0; i < NUM_WORKING_DAYS; i++) {
              NewAttendance = (int) (Math.random() * 3); // 0 for absent, 1 for part-time, 2 for full-time
-
             dailyWage = switch (attendance) {
-                case PART_TIME -> WAGE_PER_HOUR * PART_TIME_HOUR;
-                case FULL_TIME -> WAGE_PER_HOUR * FULL_DAY_HOUR;
+                case 1 -> WAGE_PER_HOUR * PART_TIME_HOUR;
+                case 2 -> WAGE_PER_HOUR * FULL_DAY_HOUR;
                 default -> 0;
             };
             monthlyWage += dailyWage;
         }
+        System.out.println("Employee Monthly Wage = " + monthlyWage);
 
+//        UC-6
+
+         int MAX_WORKING_HOURS = 100;
+         int totalWorkingDays = 0;
+         int totalWorkingHours = 0;
+         while (totalWorkingDays < NUM_WORKING_DAYS && totalWorkingHours < MAX_WORKING_HOURS) {
+            NewAttendance = (int) (Math.random() * 3); // 0 for absent, 1 for part-time, 2 for full-time
+
+             switch (NewAttendance) {
+                 case 1 -> {
+                     dailyWage = WAGE_PER_HOUR * PART_TIME_HOUR;
+                     totalWorkingHours += PART_TIME_HOUR;
+                 }
+                 case 2 -> {
+                     dailyWage = WAGE_PER_HOUR * FULL_DAY_HOUR;
+                     totalWorkingHours += FULL_DAY_HOUR;
+                 }
+                 default -> dailyWage = 0;
+             }
+            totalWorkingDays++;
+            monthlyWage += dailyWage;
+        }
+        System.out.println("Total Working Days = " + totalWorkingDays);
+        System.out.println("Total Working Hours = " + totalWorkingHours);
         System.out.println("Employee Monthly Wage = " + monthlyWage);
     }
 }
