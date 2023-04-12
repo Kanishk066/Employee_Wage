@@ -33,5 +33,24 @@ public class EmpWage {
         } else {
             System.out.println("Employee is Absent. Daily Wage = " + dailyWage);
         }
+
+        final int PART_TIME = 1;
+        final int FULL_TIME = 2;
+        final int WAGEPERHOUR = 20;
+        final int FULLDAYHOUR = 8;
+        final int PARTTIMEHOUR = 4;
+        switch (NewAttendance) {
+            case PART_TIME:
+                dailyWage = WAGEPERHOUR * PARTTIMEHOUR;
+                System.out.println("Employee is Part Time. Daily Wage = " + dailyWage);
+                break;
+            case FULL_TIME:
+                dailyWage = WAGEPERHOUR * FULLDAYHOUR;
+                System.out.println("Employee is Full Time. Daily Wage = " + dailyWage);
+                break;
+            default:
+                System.out.println("Employee is Absent. Daily Wage = " + dailyWage);
+                break;
+        }
     }
 }
