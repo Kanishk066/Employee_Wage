@@ -1,28 +1,23 @@
 package com.bl.empwage;
 class EmployeeWageCalculator {
-    static final int NUM_WORKING_DAYS = 20;
-    static final int IS_PART_TIME = 1;
-    static final int IS_FULL_TIME = 2;
-    static final int PART_TIME_HOUR = 4;
-    static final int WAGE_PER_HOUR = 20;
-    static int FULL_DAY_HOUR = 8;
-    static final int MAX_WORKING_HOURS = 100;
+    final int PART_TIME_HOUR = 4;
+    final int FULL_DAY_HOUR = 8;
     int totalWorkingDays;
     int totalWorkingHours;
     int monthlyWage;
 
-    void caculateWage() {
-        System.out.println("Welcome to employee Wage Project");
+    public int caculateWage(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours) {
+        System.out.println("Calculating wage for company" + company);
         int dailyWage;
-        while (totalWorkingDays < NUM_WORKING_DAYS && totalWorkingHours < MAX_WORKING_HOURS) {
+        while (totalWorkingDays < numWorkingDays && totalWorkingHours < maxWorkingHours) {
             int NewAttendance = (int) (Math.random() * 3); // 0 for absent, 1 for part-time, 2 for full-time
             switch (NewAttendance) {
                 case 1 -> {
-                    dailyWage = WAGE_PER_HOUR * PART_TIME_HOUR;
+                    dailyWage = wagePerHour * PART_TIME_HOUR;
                     totalWorkingHours += PART_TIME_HOUR;
                 }
                 case 2 -> {
-                    dailyWage = WAGE_PER_HOUR * FULL_DAY_HOUR;
+                    dailyWage = wagePerHour * FULL_DAY_HOUR;
                     totalWorkingHours += FULL_DAY_HOUR;
                 }
                 default -> dailyWage = 0;
@@ -30,18 +25,18 @@ class EmployeeWageCalculator {
             totalWorkingDays++;
             monthlyWage += dailyWage;
         }
-    }
-    void printWage() {
-        System.out.println("Total Working Days = " + totalWorkingDays);
-        System.out.println("Total Working Hours = " + totalWorkingHours);
-        System.out.println("Employee Monthly Wage = " + monthlyWage);
+        return monthlyWage;
     }
 }
 
 public class EmpWage {
     public static void main(String[] args) {
-             EmployeeWageCalculator obj = new EmployeeWageCalculator();
-             obj.caculateWage();
-             obj.printWage();
+             EmployeeWageCalculator companyA = new EmployeeWageCalculator();
+             int wageA = companyA.caculateWage("Company A", 20, 20, 100);
+             System.out.println("Monthly wage for company A: " + wageA);
+
+             EmployeeWageCalculator companyB = new EmployeeWageCalculator();
+             int wageB = companyB.caculateWage("Company B", 25, 25, 120);
+             System.out.println("Monthly wage for Company B: " + wageB);
     }
 }
