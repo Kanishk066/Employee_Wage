@@ -1,12 +1,25 @@
 package com.bl.empwage;
+
+import java.util.ArrayList;
+
 class EmployeeWageCalculator {
     final int PART_TIME_HOUR = 4;
     final int FULL_DAY_HOUR = 8;
     int totalWorkingDays;
     int totalWorkingHours;
     int monthlyWage;
-
-    public int caculateWage(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours) {
+    String company;
+    int wagePerHour;
+    int numWorkingDays;
+    int maxWorkingHours;
+    int totalWage;
+    public EmployeeWageCalculator(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours){
+        this.company = company;
+        this.wagePerHour = wagePerHour;
+        this.numWorkingDays = numWorkingDays;
+        this.maxWorkingHours = maxWorkingHours;
+    }
+    public int calculateWage() {
         System.out.println("Calculating wage for company" + company);
         int dailyWage;
         while (totalWorkingDays < numWorkingDays && totalWorkingHours < maxWorkingHours) {
@@ -25,18 +38,49 @@ class EmployeeWageCalculator {
             totalWorkingDays++;
             monthlyWage += dailyWage;
         }
+        totalWage += monthlyWage;
         return monthlyWage;
     }
-}
 
+    public String getCompany() {
+        return company;
+    }
+
+    public int getTotalWage() {
+        return totalWage;
+    }
+}
+class EmpWageBuilder {
+    EmployeeWageCalculator[] companies;
+    int numCompanies;
+    public EmpWageBuilder(int numCompanies){
+        companies = new EmployeeWageCalculator[numCompanies];
+        this.numCompanies = numCompanies;
+    }
+    public void addCompany(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours){
+        EmployeeWageCalculator emp = new EmployeeWageCalculator(company, wagePerHour, numWorkingDays, maxWorkingHours);
+        companies[numCompanies++] = emp;
+    }
+    public void computeWages(){
+        for (int i = 0; i < numCompanies; i++) {
+            int wage = companies[i].calculateWage();
+            System.out.println("Monthly wage for " + companies[i].getCompany() + ": " + wage);
+        }
+    }
+    public void printWages() {
+        for (int i = 0; i < numCompanies; i++) {
+            System.out.println("Total wage for " + companies[i].getCompany() + ": " + companies[i].getTotalWage());
+        }
+    }
+}
 public class EmpWage {
     public static void main(String[] args) {
-             EmployeeWageCalculator companyA = new EmployeeWageCalculator();
-             int wageA = companyA.caculateWage("Company A", 20, 20, 100);
-             System.out.println("Monthly wage for company A: " + wageA);
+             EmpWageBuilder builder = new EmpWageBuilder(2) ;
+             builder.addCompany("Company A",  20, 20, 100);
+             builder.addCompany("Company B", 25,25, 120);
+             builder.computeWages();
+             builder.printWages();
 
-             EmployeeWageCalculator companyB = new EmployeeWageCalculator();
-             int wageB = companyB.caculateWage("Company B", 25, 25, 120);
-             System.out.println("Monthly wage for Company B: " + wageB);
+
     }
 }
