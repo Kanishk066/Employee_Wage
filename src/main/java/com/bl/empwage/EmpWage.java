@@ -1,7 +1,8 @@
 package com.bl.empwage;
-
-import java.util.ArrayList;
-
+interface IComputeEmpWage {
+    void addComapny(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours);
+    void computeWages();
+}
 class EmployeeWageCalculator {
     final int PART_TIME_HOUR = 4;
     final int FULL_DAY_HOUR = 8;
@@ -61,7 +62,6 @@ class EmployeeWageCalculator {
         this.numWorkingDays = numWorkingDays;
         this.maxWorkingHours = maxWorkingHours;
     }
-
     public int getTotalWage() {
         return totalWage;
     }
@@ -86,7 +86,11 @@ class EmployeeWageCalculator {
         this.totalWage = totalWage;
     }
 }
-class EmpWageBuilder {
+interface ICompanyEmpWage {
+    void addCompany(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours);
+    void computeWages();
+}
+class EmpWageBuilder implements ICompanyEmpWage {
     CompanyEmpWage[] companies;
     int numCompanies;
     public EmpWageBuilder(){
@@ -106,7 +110,7 @@ class EmpWageBuilder {
     }
 public class EmpWage {
     public static void main(String[] args) {
-             EmpWageBuilder empWageBuilder = new EmpWageBuilder();
+             ICompanyEmpWage empWageBuilder = new EmpWageBuilder();
              empWageBuilder.addCompany("Company A",  20, 20, 100);
              empWageBuilder.addCompany("Company B", 25,25, 120);
              empWageBuilder.computeWages();
