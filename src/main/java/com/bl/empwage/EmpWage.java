@@ -1,4 +1,7 @@
 package com.bl.empwage;
+
+import java.util.ArrayList;
+
 interface IComputeEmpWage {
     void addComapny(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours);
     void computeWages();
@@ -91,23 +94,31 @@ interface ICompanyEmpWage {
     void computeWages();
 }
 class EmpWageBuilder implements ICompanyEmpWage {
-    CompanyEmpWage[] companies;
+    ArrayList<CompanyEmpWage> companies;
     int numCompanies;
     public EmpWageBuilder(){
-        companies = new CompanyEmpWage[10];
+        companies = new ArrayList<>();
     }
     public void addCompany(String company, int wagePerHour, int numWorkingDays, int maxWorkingHours){
         CompanyEmpWage emp = new CompanyEmpWage(company, wagePerHour, numWorkingDays, maxWorkingHours);
-        companies[numCompanies++] = emp;
+        companies.add(emp);
     }
     public void computeWages(){
         for (int i = 0; i < numCompanies; i++) {
-            int wage = new EmployeeWageCalculator(companies[i].getCompany(), companies[i].getWagePerHour(), companies[i].getNumWorkingDays(), companies[i].getMaxWorkingHours()).calculateWage();
-            companies[i].setTotalWage(wage);
-            System.out.println("Total wage for " + companies[i].getCompany() +" is "+ companies[i].getTotalWage());
+            int wage = new EmployeeWageCalculator(companies.get(i).getCompany(), companies.get(i).getWagePerHour(), companies.get(i).getNumWorkingDays(), companies.get(i).getMaxWorkingHours()).calculateWage();
+            companies.get(i).setTotalWage(wage);
+            System.out.println("Total wage for " + companies.get(i).getCompany() + " is " + companies.get(i).getTotalWage());
         }
     }
+    public int getTotalWage(String company) {
+        for (int i = 0; i < companies.size(); i++) {
+            if (companies.get(i).getCompany().equals(company)) {
+                return companies.get(i).getTotalWage();
+            }
+        }
+        return 0;
     }
+}
 public class EmpWage {
     public static void main(String[] args) {
              ICompanyEmpWage empWageBuilder = new EmpWageBuilder();
